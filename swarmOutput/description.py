@@ -78,7 +78,7 @@ config = {
     # Model parameter dictionary.
     'modelParams': {
         # The type of inference that this model will perform
-        'inferenceType': 'TemporalMultiStep',
+        'inferenceType': 'TemporalAnomaly',
 
         'sensorParams': {
             # Sensor diagnostic output verbosity control;
@@ -109,13 +109,6 @@ config = {
     'fieldname': u'value',
     'n': 100,
     'name': u'value',
-    'type': 'AdaptiveScalarEncoder',
-    'w': 21},
-  '_classifierInput':     {   'classifierOnly': True,
-    'clipInput': True,
-    'fieldname': u'value',
-    'n': 100,
-    'name': '_classifierInput',
     'type': 'AdaptiveScalarEncoder',
     'w': 21},
             },
@@ -314,10 +307,10 @@ control = {
 
   # Input stream specification per py/nupic/frameworks/opf/jsonschema/stream_def.json.
   #
-  'dataset' : {   u'info': u'test',
+  'dataset' : {   u'info': u'AdData',
         u'streams': [   {   u'columns': [u'*'],
-                            u'info': u'Test.csv',
-                            u'source': u'file://Data\Test.csv'}],
+                            u'info': u'AdData.csv',
+                            u'source': u'file://Data\AdData.csv'}],
         u'version': 1},
 
   # Iteration count: maximum number of iterations.  Each iteration corresponds

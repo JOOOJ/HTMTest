@@ -1,2 +1,2 @@
-modelParams|clParams|alpha,modelParams|inferenceType,modelParams|sensorParams|encoders|_classifierInput|n,modelParams|sensorParams|encoders|value:n,modelParams|spParams|synPermInactiveDec,modelParams|tmParams|activationThreshold,modelParams|tmParams|minThreshold,modelParams|tmParams|pamLength
-0.028975812845666343,NontemporalMultiStep,248,246,0.07501728494090755,14,10,2
+modelParams|clParams|alpha,modelParams|sensorParams|encoders|timestamp_timeOfDay:radius,modelParams|sensorParams|encoders|value:n,modelParams|spParams|synPermInactiveDec,modelParams|tmParams|activationThreshold,modelParams|tmParams|minThreshold,modelParams|tmParams|pamLength
+0.07502500000000001,3.375,107,0.025225000000000004,15,11,4

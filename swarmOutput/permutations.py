@@ -52,7 +52,7 @@ permutations = {
     'years': 0},
 
   'modelParams': {
-      'inferenceType': PermuteChoices(['NontemporalMultiStep', 'TemporalMultiStep']),
+    
 
     'sensorParams': {
       'encoders': {
@@ -60,7 +60,6 @@ permutations = {
   u'timestamp_dayOfWeek': PermuteEncoder(encoderClass='DateEncoder.dayOfWeek', radius=PermuteFloat(1, 6), w=21, fieldName='timestamp', ),
   u'timestamp_weekend': PermuteEncoder(encoderClass='DateEncoder.weekend', radius=PermuteChoices([1]),  w=21, fieldName='timestamp', ),
   u'value': PermuteEncoder(fieldName='value', w=21, clipInput=True, encoderClass='AdaptiveScalarEncoder', n=PermuteInt(22, 521), ),
-  '_classifierInput': dict(classifierOnly=True, fieldname='value', w=21, clipInput=True, type='AdaptiveScalarEncoder', n=PermuteInt(28, 521), ),
       },
     },
 

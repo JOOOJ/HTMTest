@@ -35,7 +35,7 @@ from nupic.frameworks.opf.exp_description_helpers import importBaseDescription
 # the sub-experiment configuration
 config ={
   'aggregationInfo' : {'seconds': 0, 'fields': [], 'months': 0, 'days': 0, 'years': 0, 'hours': 0, 'microseconds': 0, 'weeks': 0, 'minutes': 0, 'milliseconds': 0},
-  'modelParams' : {'tmParams': {'minThreshold': 10, 'activationThreshold': 14, 'pamLength': 2}, 'sensorParams': {'encoders': {'_classifierInput': {'classifierOnly': True, 'clipInput': True, 'n': 248, 'fieldname': 'value', 'w': 21, 'type': 'AdaptiveScalarEncoder'}, u'timestamp_dayOfWeek': None, u'timestamp_timeOfDay': None, u'value': {'name': 'value', 'clipInput': True, 'n': 246, 'fieldname': 'value', 'w': 21, 'type': 'AdaptiveScalarEncoder'}, u'timestamp_weekend': None}}, 'spParams': {'synPermInactiveDec': 0.07501728494090755}, 'inferenceType': 'NontemporalMultiStep', 'clParams': {'alpha': 0.028975812845666343}},
+  'modelParams' : {'tmParams': {'minThreshold': 11, 'activationThreshold': 15, 'pamLength': 4}, 'sensorParams': {'encoders': {u'timestamp_dayOfWeek': None, u'timestamp_timeOfDay': {'name': 'timestamp', 'fieldname': 'timestamp', 'timeOfDay': (21, 3.375), 'type': 'DateEncoder'}, u'value': {'name': 'value', 'clipInput': True, 'n': 107, 'fieldname': 'value', 'w': 21, 'type': 'AdaptiveScalarEncoder'}, u'timestamp_weekend': None}}, 'spParams': {'synPermInactiveDec': 0.025225000000000004}, 'clParams': {'alpha': 0.075025000000000008}},
 
 }
 
