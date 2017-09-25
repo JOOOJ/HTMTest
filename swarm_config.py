@@ -24,7 +24,7 @@ swarmConfig = {
       }
     ]   
   }, 
-  "inferenceType": "MultiStep", 
+  "inferenceType": "TemporalAnomaly", 
   "inferenceArgs": {
     "predictionSteps": [
       1

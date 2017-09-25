@@ -15,7 +15,7 @@ class anomaly_detect():
     stream data anomaly detect for one field.
     """
     
-    def __init__(self, pointCount):
+    def __init__(self, pointCount,rawData):
         
         self.timestamp = None
         self.actualValue = None
@@ -32,7 +32,15 @@ class anomaly_detect():
             estimationSamples=probationaryPeriod-numentaLearningPeriod,
             reestimationPeriod=100
         )
+        #rangePadding = abs(self.maxValue - self.minValue) * 0.2
+        #data = np.array(rawData).astype(np.float)
+        #self.parameters = getScalarMetricWithTimeOfDayAnomalyParams(
+        # data       
+        #)
+        #self._setupEncoderParams(self.parameters["modelConfig"]["modelParams"]["sensorParams"]["encoders"])
+        #self.parameters["modelConfig"]["modelParams"]["clEnable"] = True
         self.model = ModelFactory.create(MODEL_PARAMS)
+        #self.model = ModelFactory.create(self.parameters["modelConfig"])
         self.model.enableInference({"predictedField": "value"})
 
     def anomalyDetect(self, timestamp, actualValue):
@@ -50,7 +58,7 @@ class anomaly_detect():
             "timestamp": self.timestamp,
             "value": self.actualValue
         })
-        print self.modelResult
+        #print self.modelResult
         self.predictValue = self.modelResult.inferences["multiStepBestPredictions"][1]
         if self.modelResult.inferences["anomalyScore"] is not None:
             self.anomalyScore = float(self.modelResult.inferences["anomalyScore"])
@@ -60,12 +68,14 @@ class anomaly_detect():
         probScrore = self.anomalyLikelihood.anomalyProbability(
             self.actualValue, self.anomalyScore, self.timestamp)
         finalScore = self.anomalyLikelihood.computeLogLikelihood(probScrore)
+        anomalyLabel = self.modelResult.inferences["anomalyLabel"]
         self.output = {
             "timestamp": self.timestamp,
             "actualValue": self.actualValue,
             "predictValue": self.predictValue,
             "anomalyScore": self.anomalyScore,
-            "likelihoodScore":finalScore
+            "likelihoodScore":finalScore,
+            "anomalylabel":anomalyLabel
         }
         return self.output
         
@@ -74,3 +84,14 @@ class anomaly_detect():
         return min(
             math.floor(probationPercent * pointCount),
             probationPercent * 5000)
+            
+    def _setupEncoderParams(self, encoderParams):
+        # The encoder must expect the NAB-specific datafile headers
+        encoderParams["timestamp_dayOfWeek"] = encoderParams.pop("c0_dayOfWeek")
+        encoderParams["timestamp_timeOfDay"] = encoderParams.pop("c0_timeOfDay")
+        encoderParams["timestamp_timeOfDay"]["fieldname"] = "timestamp"
+        encoderParams["timestamp_timeOfDay"]["name"] = "timestamp"
+        encoderParams["timestamp_weekend"] = encoderParams.pop("c0_weekend")
+        encoderParams["c1"] = encoderParams.pop("c1")
+        encoderParams["c1"]["fieldname"] = "value"
+        encoderParams["c1"]["name"] = "value"

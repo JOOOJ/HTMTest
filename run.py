@@ -10,18 +10,21 @@ from anomalyDetect import anomaly_detect
 #from algorithm.multiStreamAnomalyDetect import multi_stream_anomaly_detect
 #import nupic
 
-def runModel(length):
+csvfile = "D:\VS\HTMTest\Data\Test.csv"
+
+def runModel(length,rawdata):
     # input file:
-    inputFilePath = os.path.join(os.getcwd(), "D:\VS\HTMTest\Data\Test.csv")
+    inputFilePath = os.path.join(os.getcwd(), csvfile)
     # output file:
-    outputPath = os.path.join(os.getcwd(), "D:\VS\HTMTest\Data\Test_Output.csv")
+    outputPath = os.path.join(os.getcwd(), "D:\VS\HTMTest\Data\Test_Output3.csv")
   
     detectObject = anomaly_detect(
-            pointCount = length)
+            pointCount = length,
+            rawData = rawdata)
 
     with open(outputPath,'wb') as outfile:
         writeFile = csv.writer(outfile)
-        columnsName = ["timestamp", "value", "prediction","anomalyScore","likelihoodScore"]
+        columnsName = ["timestamp", "value", "prediction","anomalyScore","likelihoodScore","anomalyLabel"]
         writeFile.writerow(columnsName)
         #for key,value in dataPoints.iteritems():
         with open(inputFilePath,'rb') as input:
@@ -39,25 +42,27 @@ def runModel(length):
                 prediction = output["predictValue"]
                 anomalyScore = output["anomalyScore"]
                 finalScore = output["likelihoodScore"]
-            
-                writeFile.writerow([timestamp, actualValue, prediction,anomalyScore,finalScore])
+                anomalylabel = output["anomalylabel"]
+                writeFile.writerow([timestamp, actualValue, prediction,anomalyScore,finalScore,anomalylabel])
            #print "a value = %s prediction = %s anomalyScore = %s" % (str(actualValue), str(prediction),str(anomalyScore))
 
 def getDataLength():
-    inputFilePath = os.path.join(os.getcwd(), "D:\VS\HTMTest\Data\Test.csv")
+    inputFilePath = os.path.join(os.getcwd(), csvfile)
     length=0
+    rawdata=[]
     with open(inputFilePath,'rb') as input:
         csvReader = csv.reader(input)
         csvReader.next()
         csvReader.next()
-        
-        for row in csvReader:            
+        csvReader.next()
+        for row in csvReader:  
             length+=1
-    return length
+            rawdata.append(float(row[1]))
+    return length,rawdata
     
 def runTest():
-    length = getDataLength()
-    runModel(length)
+    (length,rawdata) = getDataLength()
+    runModel(length,rawdata)
 
 if __name__ == "__main__":
     runTest()
